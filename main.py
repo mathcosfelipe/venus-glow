@@ -1,58 +1,33 @@
-#para eventual consulta: 
+import math
+import datetime
+from datetime import date
+from datetime import timedelta
 
-#somar número de dias numa data no python (import datetime): 
-#https://hkotsubo.github.io/blog/2019-04-06/nao-reinvente-a-roda-como-somar-dias-a-uma-data
-#https://pt.stackoverflow.com/questions/2843/como-subtrair-duas-datas-usando-python
+s = 10.81
+S = 14.95
+r = 0
+ψ = 0
+φ = 0
+θ = 0
+p = 0
+b = 0
 
-#ângulo a partir do seno ou do cosseno (import math): 
-#https://stackoverflow.com/questions/6745464/inverse-cosine-in-python
- #não há mais de um ângulo com o mesmo cosseno para ângulos menores que 180°, ok! 
- #caso onde uso a lei dos senos (caso 3), há apenas 1 possibilidade de ângulo para ser obtida a partir do seno, e este é
- #necessariamente o primeiro ângulo obtido com aquele seno, então ok também! 
+ultimacinf = date(2020, 6, 3) 
+proximacinf = date(2022, 1, 8)
+datacsup = date(2021, 3, 22)
 
-#outra restrição aplicada: teorema da desigualdade triangular
-#https://www.mathwarehouse.com/geometry/triangles/triangle-inequality-theorem-rule-explained.php
-#https://www.mathwarehouse.com/triangle-calculator/online.php
+t = 0
+data1 = 0
+data2 = 0
+cinf1 = 0
+cinf2 = 0
+csup1 = 0
+csup2 = 0
+cmax1 = 0
+cmax2 = 0
 
+erro = 0
 
-
-import math #para cálculos de seno, cosseno e raiz quadrada
-import datetime #para input de data
-from datetime import date #para formato de data sem horas
-from datetime import timedelta #para operações com formato de data
-
-s = 10.81 #distância Vênus-Sol, em quilômetros; o *10^7 (*10**7) está apenas no 'print' final
-S = 14.95 #distância Terra-Sol, em quilômetros; o *10^7 (*10**7) está apenas no 'print' final
-r = 0 #distância Terra-Vênus, em quilômetros; o *10^7 (*10**7) fica apenas no 'print' final
-ψ = 0 #ângulo Sol-Terra-Vênus, em radianos
-φ = 0 #ângulo Sol-Vênus-Terra, em radianos
-θ = 0 #ângulo Vênus-Sol-Terra, em radianos
-p = 0 #fase (área da parte iluminada dividida pela área total do círculo), em km²
-b = 0 #brilho, em função de K (constante), como explicitado no 'print' final
-
-#o limite de casas para a entrada de ângulos é de 15 casas decimais, pois os valores de referência foram
-#calculados para π = 3.141592653589793
-
-ultimacinf = date(2020, 6, 3) #data da última conjunção inferior de vênus. fonte: https://in-the-sky.org/news.php?id=20200603_11_100
-proximacinf = date(2022, 1, 8) #data da próxima conjunção inferior de vênus. fonte: https://in-the-sky.org/news.php?id=20220109_11_100
-datacsup = date(2021, 3, 22) #data da conjunção superior entre as duas conjunções inferiores acima (ultimacinf + 292 dias)
-
-#o programa retorna 2 possíveis datas para cada configuração do triângulo formado entre Sol, Terra e Vênus. 
-#a 1ª data é calculada pelos dias posteriores à última conjunção inferior, e a 2ª pelos dias anteriores à próxima
-t = 0 #número de dias anteriores ou posteriores à conjunção inferior
-data1 = 0 #possível data 1, calculada a partir da última conjunção inferior
-data2 = 0 #possível data 2, calculada a partir da próxima conjunção inferior
-cinf1 = 0 #dias faltantes para a próxima conjunção inferior, referente à data 1
-cinf2 = 0 #dias faltantes para a próxima conjunção inferior, referente à data 2
-csup1 = 0 #dias faltantes para a próxima conjunção superior, referente à data 1
-csup2 = 0 #dias faltantes para a próxima conjunção superior, referente à data 2
-cmax1 = 0 #dias faltantes para o próximo brilho máximo, referente à data 1
-cmax2 = 0 #dias faltantes para o próximo brilho máximo, referente à data 2
-
-erro = 0 #se diferente de zero, não há o 'print' final, e sim a mensagem correspondente ao erro ou ao caso específico (conjunção)
-
-
-#entrada inicial: opção de qual valor será a base para o cálculo dos demais valores
 info = int(input("De qual informação você dispõe?"
 "\n1) distância Terra-Vênus"
 "\n2) ângulo Sol-Terra-Vênus"
@@ -61,28 +36,27 @@ info = int(input("De qual informação você dispõe?"
 "\n5) data - entre a última conjunção inferior (03 de junho de 2020) e a próxima (08 de janeiro de 2022)"
 "\nDigite apenas o número correspondente: "))
 
-#1) obtenção dos valores a partir da distância Terra-Vênus
 if info == 1: 
     r = float(input("Entre com o valor da distância Terra-Vênus, em quilômetros: "))
-    r = (r/(10**7)) #o 10^7 fica apenas no 'print', não sendo usado para os cálculos
-    if r == 25.76: #a distância Terra-Vênus é igual à soma das distâncias Terra-Sol e Vênus-Sol, ou seja, há conjunção superior
+    r = (r/(10**7))
+    if r == 25.76:
         erro = "conjsup"
-    elif r > 25.76: #a soma de 2 lados de um triângulo deve exceder o 3º lado! logo, r deve ser menor que 10.81+14.95
+    elif r > 25.76:
         erro = 2
-    elif r == 4.14: #a distância Terra-Vênus é igual à 'Terra-Sol menos Vênus-Sol', ou seja, há conjunção inferior
+    elif r == 4.14:
         erro = "conjinf"
-    elif r < 4.14: #a soma de 2 lados de um triângulo deve exceder o 3º lado! logo, r deve ser maior que 14.95-10.81
+    elif r < 4.14:
         erro = 2
-    else: #4.14 < r < 25.76
-        ψ = (math.acos((r**2+S**2-s**2)/(2*r*S))) #lei dos cossenos
-        φ = (math.acos((r**2+s**2-S**2)/(2*r*s))) #lei dos cossenos
-        θ = (math.acos((s**2+S**2-r**2)/(2*s*S))) #lei dos cossenos
-        p = (0.5*(1+math.cos(φ)))*100 #fase em função de φ
-        b = ((2*s*r+r**2+s**2-S**2)/r**3) #brilho em função de r
-        t = (θ/0.010758878950649977) #aplicação da equação t = ((θ)/(2*π/584)); o t inicial é uma conjunção inferior
-        t = round(t,0) #t em dias (número de dias anteriores ou posteriores à conjunção inferior)
-        data1 = ultimacinf + timedelta(days = t) #possível data 1, calculada a partir da última conjunção inferior
-        data2 = proximacinf - timedelta(days = t) #possível data 2, calculada a partir da próxima conjunção inferior
+    else:
+        ψ = (math.acos((r**2+S**2-s**2)/(2*r*S)))
+        φ = (math.acos((r**2+s**2-S**2)/(2*r*s)))
+        θ = (math.acos((s**2+S**2-r**2)/(2*s*S)))
+        p = (0.5*(1+math.cos(φ)))*100
+        b = ((2*s*r+r**2+s**2-S**2)/r**3)
+        t = (θ/0.010758878950649977)
+        t = round(t,0) 
+        data1 = ultimacinf + timedelta(days = t)
+        data2 = proximacinf - timedelta(days = t)
         cinf1 = (584-t)
         cinf2 = (t)
         csup1 = (292-t)
@@ -100,38 +74,34 @@ if info == 1:
             cmax2 = (36+36)
             hoje = "Hoje é dia de brilho máximo! "
 
-#2) obtenção dos valores a partir do ângulo Sol-Terra-Vênus
-#neste caso, há duas configurações possíveis, e sua saída ('print') é separada das demais
 elif info == 2: 
     ψ = float(input("Entre com o valor do ângulo Sol-Terra-Vênus, em radianos (até"
     "\n15 casas decimais): "))
-    if ψ == 0: #há conjunção
+    if ψ == 0:
         erro = "conj"
-    elif ψ == 3.141592653589793: #o ângulo ψ não pode ser igual a 180° (3.141592653589793 rad)
+    elif ψ == 3.141592653589793:
         erro = 3.1
-    elif ψ > 3.141592653589793: #o ângulo não pode ser maior que 180° (3.141592653589793 rad)
+    elif ψ > 3.141592653589793:
         erro = 3
-    elif ψ > 0.8082463510273271: #a soma de 2 lados de um triângulo deve exceder o 3º lado! não é possível se maior que este valor
+    elif ψ > 0.8082463510273271:
         erro = 4
     elif ψ < 0: 
         erro = 3.2
     else:
-        #resolvendo equação de 2º grau para obter r via lei dos cossenos: 
         a = 1
         b = -2*S*(math.cos(ψ))
         c = S**2-s**2
         delta = ((b**2) - (4*a*c))
-        ra = ((-b + delta**(1/2)) / (2*a)) #raiz 1, primeiro valor possível para r
-        rb = ((-b - delta**(1/2)) / (2*a)) #raiz 2, segundo valor possível para r
-        #obtenção dos demais valores para ambas as raízes (ra e rb): 
-        φa = (math.acos((ra**2+s**2-S**2)/(2*ra*s))) #lei dos cossenos, para ra
-        θa = (math.acos((s**2+S**2-ra**2)/(2*s*S))) #lei dos cossenos, para ra
-        pa = (0.5*(1+math.cos(φa)))*100 #fase em função de φa
-        ba = ((2*s*ra+ra**2+s**2-S**2)/ra**3) #brilho em função de ra
-        ta = (θa/0.010758878950649977) #aplicação da equação t = ((θ)/(2*π/584)); o t inicial é uma conjunção inferior
-        ta = round(ta,0) #t em dias (número de dias anteriores ou posteriores à conjunção inferior)
-        data1a = ultimacinf + timedelta(days = ta) #possível data 1, calculada a partir da última conjunção inferior
-        data2a = proximacinf - timedelta(days = ta) #possível data 2, calculada a partir da próxima conjunção inferior
+        ra = ((-b + delta**(1/2)) / (2*a))
+        rb = ((-b - delta**(1/2)) / (2*a))
+        φa = (math.acos((ra**2+s**2-S**2)/(2*ra*s)))
+        θa = (math.acos((s**2+S**2-ra**2)/(2*s*S)))
+        pa = (0.5*(1+math.cos(φa)))*100
+        ba = ((2*s*ra+ra**2+s**2-S**2)/ra**3)
+        ta = (θa/0.010758878950649977)
+        ta = round(ta,0)
+        data1a = ultimacinf + timedelta(days = ta) 
+        data2a = proximacinf - timedelta(days = ta)
         cinf1a = (584-ta)
         cinf2a = (ta)
         csup1a = (292-ta)
@@ -144,18 +114,18 @@ elif info == 2:
             cmax1a = (584-36-36-ta) 
             cmax2a = (ta-36)
             hojea = ""
-        else: #t = 36
+        else:
             cmax1a = (584-36-36)
             cmax2a = (36+36)
             hojea = "Hoje é dia de brilho máximo! "
-        φb = (math.acos((rb**2+s**2-S**2)/(2*rb*s))) #lei dos cossenos, para rb
-        θb = (math.acos((s**2+S**2-rb**2)/(2*s*S))) #lei dos cossenos, para rb
-        pb = (0.5*(1+math.cos(φb)))*100 #fase em função de φb
-        bb = ((2*s*rb+rb**2+s**2-S**2)/rb**3) #brilho em função de rb
-        tb = (θb/0.010758878950649977) #aplicação da equação t = ((θ)/(2*π/584)); o t inicial é uma conjunção inferior
-        tb = round(tb,0) #t em dias (número de dias anteriores ou posteriores à conjunção inferior)
-        data1b = ultimacinf + timedelta(days = tb) #possível data 1, calculada a partir da última conjunção inferior
-        data2b = proximacinf - timedelta(days = tb) #possível data 2, calculada a partir da próxima conjunção inferior
+        φb = (math.acos((rb**2+s**2-S**2)/(2*rb*s)))
+        θb = (math.acos((s**2+S**2-rb**2)/(2*s*S)))
+        pb = (0.5*(1+math.cos(φb)))*100
+        bb = ((2*s*rb+rb**2+s**2-S**2)/rb**3)
+        tb = (θb/0.010758878950649977)
+        tb = round(tb,0)
+        data1b = ultimacinf + timedelta(days = tb)
+        data2b = proximacinf - timedelta(days = tb)
         cinf1b = (584-tb)
         cinf2b = (tb)
         csup1b = (292-tb)
@@ -168,33 +138,32 @@ elif info == 2:
             cmax1b = (584-36-36-tb) 
             cmax2b = (tb-36)
             hojeb = ""
-        else: #t = 36
+        else:
             cmax1b = (584-36-36)
             cmax2b = (36+36)
             hojeb = "Hoje é dia de brilho máximo! "
         
-#3) obtenção dos valores a partir do ângulo Sol-Vênus-Terra  
 elif info == 3: 
     φ = float(input("Entre com o valor do ângulo Sol-Vênus-Terra, em radianos (até"
     "\n15 casas decimais, e 3.141592653589793 para π (180°)): "))
-    if φ == 3.141592653589793: #há conjunção inferior
+    if φ == 3.141592653589793:
         erro = "conjinf"
-    elif φ == 0: #há conjunção superior
+    elif φ == 0:
         erro = "conjsup"
-    elif φ > 3.141592653589793: #o ângulo não pode ser maior que 180° (3.141592653589793 rad)
+    elif φ > 3.141592653589793:
         erro = 3
     elif φ < 0: 
         erro = 3.2
     else: 
-        ψ = (math.asin(((math.sin(φ)*s)/S))) #lei dos senos
-        θ = (3.141592653589793-φ-ψ) #terceiro ângulo
-        r = ((s*math.sin(θ))/math.sin(ψ)) #lei dos senos
-        p = (0.5*(1+math.cos(φ)))*100 #fase em função de φ
-        b = ((2*s*r+r**2+s**2-S**2)/r**3) #brilho em função de r
-        t = (θ/0.010758878950649977) #aplicação da equação t = ((θ)/(2*π/584)); o t inicial é uma conjunção inferior
-        t = round(t,0) #t em dias (número de dias anteriores ou posteriores à conjunção inferior)
-        data1 = ultimacinf + timedelta(days = t) #possível data 1, calculada a partir da última conjunção inferior
-        data2 = proximacinf - timedelta(days = t) #possível data 2, calculada a partir da próxima conjunção inferior
+        ψ = (math.asin(((math.sin(φ)*s)/S)))
+        θ = (3.141592653589793-φ-ψ)
+        r = ((s*math.sin(θ))/math.sin(ψ))
+        p = (0.5*(1+math.cos(φ)))*100
+        b = ((2*s*r+r**2+s**2-S**2)/r**3)
+        t = (θ/0.010758878950649977)
+        t = round(t,0)
+        data1 = ultimacinf + timedelta(days = t)
+        data2 = proximacinf - timedelta(days = t)
         cinf1 = (584-t)
         cinf2 = (t)
         csup1 = (292-t)
@@ -207,33 +176,32 @@ elif info == 3:
             cmax1 = (584-36-36-t) 
             cmax2 = (t-36)
             hoje = ""
-        else: #t = 36
+        else:
             cmax1 = (584-36-36)
             cmax2 = (36+36)
             hoje = "Hoje é dia de brilho máximo! "
             
-#4) obtenção dos valores a partir do ângulo Vênus-Sol-Terra    
 elif info == 4: 
     θ = float(input("Entre com o valor do ângulo Vênus-Sol-Terra, em radianos (até"
     "\n15 casas decimais, e 3.141592653589793 para π (180°)): "))
-    if θ == 3.141592653589793: #há conjunção superior
+    if θ == 3.141592653589793:
         erro = "conjsup"
-    elif θ == 0: #há conjunção inferior
+    elif θ == 0:
         erro = "conjinf"
-    elif θ > 3.141592653589793: #o ângulo não pode ser maior que 180° (3.141592653589793 rad)
+    elif θ > 3.141592653589793:
         erro = 3
     elif θ < 0: 
         erro = 3.2
     else: 
-        r = (math.sqrt(s**2+S**2-2*s*S*(math.cos(θ)))) #lei dos cossenos
-        ψ = (math.acos((S**2+r**2-s**2)/(2*S*r))) #lei dos cossenos
-        φ = (math.acos((r**2+s**2-S**2)/(2*r*s))) #lei dos cossenos
-        p = (0.5*(1+math.cos(φ)))*100 #fase em função de φ
-        b = ((2*s*r+r**2+s**2-S**2)/r**3) #brilho em função de r
-        t = (θ/0.010758878950649977) #aplicação da equação t = ((θ)/(2*π/584)); o t inicial é uma conjunção inferior
-        t = round(t,0) #t em dias (número de dias anteriores ou posteriores à conjunção inferior)
-        data1 = ultimacinf + timedelta(days = t) #possível data 1, calculada a partir da última conjunção inferior
-        data2 = proximacinf - timedelta(days = t) #possível data 2, calculada a partir da próxima conjunção inferior
+        r = (math.sqrt(s**2+S**2-2*s*S*(math.cos(θ))))
+        ψ = (math.acos((S**2+r**2-s**2)/(2*S*r)))
+        φ = (math.acos((r**2+s**2-S**2)/(2*r*s)))
+        p = (0.5*(1+math.cos(φ)))*100
+        b = ((2*s*r+r**2+s**2-S**2)/r**3)
+        t = (θ/0.010758878950649977)
+        t = round(t,0)
+        data1 = ultimacinf + timedelta(days = t)
+        data2 = proximacinf - timedelta(days = t)
         cinf1 = (584-t)
         cinf2 = (t)
         csup1 = (292-t)
@@ -246,12 +214,11 @@ elif info == 4:
             cmax1 = (584-36-36-t) 
             cmax2 = (t-36)
             hoje = ""
-        else: #t = 36
+        else:
             cmax1 = (584-36-36)
             cmax2 = (36+36)
             hoje = "Hoje é dia de brilho máximo! "
 
-#5) obtenção dos valores a partir de data
 elif info==5: 
     userAno = int(input("Insira o ano: "))
     userMes = int(input("Insira o mês: "))
@@ -267,26 +234,26 @@ elif info==5:
         erro = "conjinf_ult"
     elif userData == datacsup:
         erro = "conjsup_data"
-    else: #ultimacinf < userData < proximacinf, exceto pela conjunção superior (caso particular)
+    else:
         t = userData - ultimacinf
         t = t.days
         if t < 292: 
             dias = t
-        else: #t > 292: (o caso onde é igual já foi excluído após o input da data)
+        else:
             dias = (584-t)
-        θ = 0.010758878950649977*dias #aplicação da equação t = ((θ)*(2*π/584))
-                          #há alguma diferença, devido ao arredondamento dos dias
-                          #o 584 seria alterado para 579 para manter o arredondamento de referência (de 36.3 para 36)
-        r = (math.sqrt(s**2+S**2-2*s*S*(math.cos(θ)))) #lei dos cossenos
-        ψ = (math.acos((S**2+r**2-s**2)/(2*S*r))) #lei dos cossenos
-        φ = (math.acos((r**2+s**2-S**2)/(2*r*s))) #lei dos cossenos
-        p = (0.5*(1+math.cos(φ)))*100 #fase em função de φ
-        b = ((2*s*r+r**2+s**2-S**2)/r**3) #brilho em função de r
+        θ = 0.010758878950649977*dias
+                          
+                          
+        r = (math.sqrt(s**2+S**2-2*s*S*(math.cos(θ))))
+        ψ = (math.acos((S**2+r**2-s**2)/(2*S*r)))
+        φ = (math.acos((r**2+s**2-S**2)/(2*r*s)))
+        p = (0.5*(1+math.cos(φ)))*100 
+        b = ((2*s*r+r**2+s**2-S**2)/r**3)
         data = userData
         cinf = (584-t)
         if t < 292: 
             csup = (292-t)
-        else: #t > 292 (o caso onde é igual já foi excluído após o input da data)
+        else:
             csup = (876-t)
         if t == 36: 
             cmax = 512
@@ -297,15 +264,13 @@ elif info==5:
         elif t < 36: 
             cmax = (36-t)
             hoje = ""
-        else: #t > 36:
+        else:
             cmax = (584-36-36-t) 
             hoje = ""
 
-else: #número inválido como opção
+else:
     erro = 1
 
-
-#saídas para o usuário: 
 
 if erro == 1:
     print("\n\nOpção inválida! Reinicie o programa")
@@ -442,8 +407,8 @@ elif erro == "conjsup_data":
     "\nFaltam 256 dias para o próximo brilho máximo.",
     sep='')
     
-else:  #erro == 0, ou seja, é de fato formado um triângulo
-    if info == 5: #apenas uma possibilidade de data, visto que a data foi a informação inserida
+else:
+    if info == 5:
         print("\n\nA distância Vênus-Sol é: ",s,"*10^7 km"
         "\nA distância Terra-Sol é: ",S,"*10^7 km"
         "\nA distância Terra-Vênus é: ",r,"*10^7 km"
@@ -463,7 +428,7 @@ else:  #erro == 0, ou seja, é de fato formado um triângulo
         "\n",
         sep='')
         
-    elif info != 2: #o caso 2 possui duas configurações, e sua saída é separada das demais
+    elif info != 2:
         print("\n\nA distância Vênus-Sol é: ",s,"*10^7 km"
         "\nA distância Terra-Sol é: ",S,"*10^7 km"
         "\nA distância Terra-Vênus é: ",r,"*10^7 km"
@@ -488,7 +453,7 @@ else:  #erro == 0, ou seja, é de fato formado um triângulo
         "\n",
         sep='')
 
-    else: #info == 2; o caso 2 possui duas configurações, e sua saída é separada das demais
+    else:
         print("\n\nHá 2 cenários possíveis. "
         "\n"
         "\n Cenário 1: " 
