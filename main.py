@@ -6,9 +6,9 @@ from datetime import timedelta
 s = 10.81
 S = 14.95
 r = 0
-ψ = 0
-φ = 0
-θ = 0
+psi = 0
+phi = 0
+theta = 0
 p = 0
 b = 0
 
@@ -48,12 +48,12 @@ if info == 1:
     elif r < 4.14:
         erro = 2
     else:
-        ψ = (math.acos((r**2+S**2-s**2)/(2*r*S)))
-        φ = (math.acos((r**2+s**2-S**2)/(2*r*s)))
-        θ = (math.acos((s**2+S**2-r**2)/(2*s*S)))
-        p = (0.5*(1+math.cos(φ)))*100
+        psi = (math.acos((r**2+S**2-s**2)/(2*r*S)))
+        phi = (math.acos((r**2+s**2-S**2)/(2*r*s)))
+        theta = (math.acos((s**2+S**2-r**2)/(2*s*S)))
+        p = (0.5*(1+math.cos(phi)))*100
         b = ((2*s*r+r**2+s**2-S**2)/r**3)
-        t = (θ/0.010758878950649977)
+        t = (theta/0.010758878950649977)
         t = round(t,0) 
         data1 = ultimacinf + timedelta(days = t)
         data2 = proximacinf - timedelta(days = t)
@@ -75,30 +75,30 @@ if info == 1:
             hoje = "Hoje é dia de brilho máximo! "
 
 elif info == 2: 
-    ψ = float(input("Entre com o valor do ângulo Sol-Terra-Vênus, em radianos (até"
+    psi = float(input("Entre com o valor do ângulo Sol-Terra-Vênus, em radianos (até"
     "\n15 casas decimais): "))
-    if ψ == 0:
+    if psi == 0:
         erro = "conj"
-    elif ψ == 3.141592653589793:
+    elif psi == 3.141592653589793:
         erro = 3.1
-    elif ψ > 3.141592653589793:
+    elif psi > 3.141592653589793:
         erro = 3
-    elif ψ > 0.8082463510273271:
+    elif psi > 0.8082463510273271:
         erro = 4
-    elif ψ < 0: 
+    elif psi < 0: 
         erro = 3.2
     else:
         a = 1
-        b = -2*S*(math.cos(ψ))
+        b = -2*S*(math.cos(psi))
         c = S**2-s**2
         delta = ((b**2) - (4*a*c))
         ra = ((-b + delta**(1/2)) / (2*a))
         rb = ((-b - delta**(1/2)) / (2*a))
-        φa = (math.acos((ra**2+s**2-S**2)/(2*ra*s)))
-        θa = (math.acos((s**2+S**2-ra**2)/(2*s*S)))
-        pa = (0.5*(1+math.cos(φa)))*100
+        phia = (math.acos((ra**2+s**2-S**2)/(2*ra*s)))
+        thetaa = (math.acos((s**2+S**2-ra**2)/(2*s*S)))
+        pa = (0.5*(1+math.cos(phia)))*100
         ba = ((2*s*ra+ra**2+s**2-S**2)/ra**3)
-        ta = (θa/0.010758878950649977)
+        ta = (thetaa/0.010758878950649977)
         ta = round(ta,0)
         data1a = ultimacinf + timedelta(days = ta) 
         data2a = proximacinf - timedelta(days = ta)
@@ -118,11 +118,11 @@ elif info == 2:
             cmax1a = (584-36-36)
             cmax2a = (36+36)
             hojea = "Hoje é dia de brilho máximo! "
-        φb = (math.acos((rb**2+s**2-S**2)/(2*rb*s)))
-        θb = (math.acos((s**2+S**2-rb**2)/(2*s*S)))
-        pb = (0.5*(1+math.cos(φb)))*100
+        phib = (math.acos((rb**2+s**2-S**2)/(2*rb*s)))
+        thetab = (math.acos((s**2+S**2-rb**2)/(2*s*S)))
+        pb = (0.5*(1+math.cos(phib)))*100
         bb = ((2*s*rb+rb**2+s**2-S**2)/rb**3)
-        tb = (θb/0.010758878950649977)
+        tb = (thetab/0.010758878950649977)
         tb = round(tb,0)
         data1b = ultimacinf + timedelta(days = tb)
         data2b = proximacinf - timedelta(days = tb)
@@ -144,23 +144,23 @@ elif info == 2:
             hojeb = "Hoje é dia de brilho máximo! "
         
 elif info == 3: 
-    φ = float(input("Entre com o valor do ângulo Sol-Vênus-Terra, em radianos (até"
+    phi = float(input("Entre com o valor do ângulo Sol-Vênus-Terra, em radianos (até"
     "\n15 casas decimais, e 3.141592653589793 para π (180°)): "))
-    if φ == 3.141592653589793:
+    if phi == 3.141592653589793:
         erro = "conjinf"
-    elif φ == 0:
+    elif phi == 0:
         erro = "conjsup"
-    elif φ > 3.141592653589793:
+    elif phi > 3.141592653589793:
         erro = 3
-    elif φ < 0: 
+    elif phi < 0: 
         erro = 3.2
     else: 
-        ψ = (math.asin(((math.sin(φ)*s)/S)))
-        θ = (3.141592653589793-φ-ψ)
-        r = ((s*math.sin(θ))/math.sin(ψ))
-        p = (0.5*(1+math.cos(φ)))*100
+        psi = (math.asin(((math.sin(phi)*s)/S)))
+        theta = (3.141592653589793-phi-psi)
+        r = ((s*math.sin(theta))/math.sin(psi))
+        p = (0.5*(1+math.cos(phi)))*100
         b = ((2*s*r+r**2+s**2-S**2)/r**3)
-        t = (θ/0.010758878950649977)
+        t = (theta/0.010758878950649977)
         t = round(t,0)
         data1 = ultimacinf + timedelta(days = t)
         data2 = proximacinf - timedelta(days = t)
@@ -182,23 +182,23 @@ elif info == 3:
             hoje = "Hoje é dia de brilho máximo! "
             
 elif info == 4: 
-    θ = float(input("Entre com o valor do ângulo Vênus-Sol-Terra, em radianos (até"
+    theta = float(input("Entre com o valor do ângulo Vênus-Sol-Terra, em radianos (até"
     "\n15 casas decimais, e 3.141592653589793 para π (180°)): "))
-    if θ == 3.141592653589793:
+    if theta == 3.141592653589793:
         erro = "conjsup"
-    elif θ == 0:
+    elif theta == 0:
         erro = "conjinf"
-    elif θ > 3.141592653589793:
+    elif theta > 3.141592653589793:
         erro = 3
-    elif θ < 0: 
+    elif theta < 0: 
         erro = 3.2
     else: 
-        r = (math.sqrt(s**2+S**2-2*s*S*(math.cos(θ))))
-        ψ = (math.acos((S**2+r**2-s**2)/(2*S*r)))
-        φ = (math.acos((r**2+s**2-S**2)/(2*r*s)))
-        p = (0.5*(1+math.cos(φ)))*100
+        r = (math.sqrt(s**2+S**2-2*s*S*(math.cos(theta))))
+        psi = (math.acos((S**2+r**2-s**2)/(2*S*r)))
+        phi = (math.acos((r**2+s**2-S**2)/(2*r*s)))
+        p = (0.5*(1+math.cos(phi)))*100
         b = ((2*s*r+r**2+s**2-S**2)/r**3)
-        t = (θ/0.010758878950649977)
+        t = (theta/0.010758878950649977)
         t = round(t,0)
         data1 = ultimacinf + timedelta(days = t)
         data2 = proximacinf - timedelta(days = t)
@@ -241,13 +241,13 @@ elif info==5:
             dias = t
         else:
             dias = (584-t)
-        θ = 0.010758878950649977*dias
+        theta = 0.010758878950649977*dias
                           
                           
-        r = (math.sqrt(s**2+S**2-2*s*S*(math.cos(θ))))
-        ψ = (math.acos((S**2+r**2-s**2)/(2*S*r)))
-        φ = (math.acos((r**2+s**2-S**2)/(2*r*s)))
-        p = (0.5*(1+math.cos(φ)))*100 
+        r = (math.sqrt(s**2+S**2-2*s*S*(math.cos(theta))))
+        psi = (math.acos((S**2+r**2-s**2)/(2*S*r)))
+        phi = (math.acos((r**2+s**2-S**2)/(2*r*s)))
+        p = (0.5*(1+math.cos(phi)))*100 
         b = ((2*s*r+r**2+s**2-S**2)/r**3)
         data = userData
         cinf = (584-t)
@@ -283,7 +283,7 @@ elif erro == 3:
     print("\n\nEntrada inválida! Ângulo não pode ser superior a 180° (3.141592653589793 rad). Reinicie o programa")
 
 elif erro == 3.1: 
-    print("\n\nEntrada inválida! O ângulo ψ não pode ser igual a 180° (3.141592653589793 rad). Reinicie o programa")
+    print("\n\nEntrada inválida! O ângulo psi não pode ser igual a 180° (3.141592653589793 rad). Reinicie o programa")
 
 elif erro == 3.2: 
     print("\n\nEntrada inválida! O ângulo não pode ser negativo. Reinicie o programa")
@@ -412,9 +412,9 @@ else:
         print("\n\nA distância Vênus-Sol é: ",s,"*10^7 km"
         "\nA distância Terra-Sol é: ",S,"*10^7 km"
         "\nA distância Terra-Vênus é: ",r,"*10^7 km"
-        "\nO ângulo Sol-Terra-Vênus é: ",ψ," rad (",math.degrees(ψ),"°)"
-        "\nO ângulo Sol-Vênus-Terra é: ",φ," rad (",math.degrees(φ),"°)"
-        "\nO ângulo Vênus-Sol-Terra é: ",θ," rad (",math.degrees(θ),"°)"
+        "\nO ângulo Sol-Terra-Vênus é: ",psi," rad (",math.degrees(psi),"°)"
+        "\nO ângulo Sol-Vênus-Terra é: ",phi," rad (",math.degrees(phi),"°)"
+        "\nO ângulo Vênus-Sol-Terra é: ",theta," rad (",math.degrees(theta),"°)"
         "\nFase: ",p,"%"
         "\nBrilho: ",b,"*10^(-14)*K, onde K = constante"
         "\n",
@@ -432,9 +432,9 @@ else:
         print("\n\nA distância Vênus-Sol é: ",s,"*10^7 km"
         "\nA distância Terra-Sol é: ",S,"*10^7 km"
         "\nA distância Terra-Vênus é: ",r,"*10^7 km"
-        "\nO ângulo Sol-Terra-Vênus é: ",ψ," rad (",math.degrees(ψ),"°)"
-        "\nO ângulo Sol-Vênus-Terra é: ",φ," rad (",math.degrees(φ),"°)"
-        "\nO ângulo Vênus-Sol-Terra é: ",θ," rad (",math.degrees(θ),"°)"
+        "\nO ângulo Sol-Terra-Vênus é: ",psi," rad (",math.degrees(psi),"°)"
+        "\nO ângulo Sol-Vênus-Terra é: ",phi," rad (",math.degrees(phi),"°)"
+        "\nO ângulo Vênus-Sol-Terra é: ",theta," rad (",math.degrees(theta),"°)"
         "\nFase: ",p,"%"
         "\nBrilho: ",b,"*10^(-14)*K, onde K = constante"
         "\n",
@@ -460,9 +460,9 @@ else:
         "\nA distância Vênus-Sol é: ",s,"*10^7 km"
         "\nA distância Terra-Sol é: ",S,"*10^7 km"
         "\nA distância Terra-Vênus é: ",ra,"*10^7 km"
-        "\nO ângulo Sol-Terra-Vênus é: ",ψ," rad (",math.degrees(ψ),"°)"
-        "\nO ângulo Sol-Vênus-Terra é: ",φa," rad (",math.degrees(φa),"°)"
-        "\nO ângulo Vênus-Sol-Terra é: ",θa," rad (",math.degrees(θa),"°)"
+        "\nO ângulo Sol-Terra-Vênus é: ",psi," rad (",math.degrees(psi),"°)"
+        "\nO ângulo Sol-Vênus-Terra é: ",phia," rad (",math.degrees(phia),"°)"
+        "\nO ângulo Vênus-Sol-Terra é: ",thetaa," rad (",math.degrees(thetaa),"°)"
         "\nFase: ",pa,"%"
         "\nBrilho: ",ba,"*10^(-14)*K, onde K = constante"
         "\n"
@@ -482,9 +482,9 @@ else:
         "\nA distância Vênus-Sol é: ",s,"*10^7 km"
         "\nA distância Terra-Sol é: ",S,"*10^7 km"
         "\nA distância Terra-Vênus é: ",rb,"*10^7 km"
-        "\nO ângulo Sol-Terra-Vênus é: ",ψ," rad (",math.degrees(ψ),"°)"
-        "\nO ângulo Sol-Vênus-Terra é: ",φb," rad (",math.degrees(φb),"°)"
-        "\nO ângulo Vênus-Sol-Terra é: ",θb," rad (",math.degrees(θb),"°)"
+        "\nO ângulo Sol-Terra-Vênus é: ",psi," rad (",math.degrees(psi),"°)"
+        "\nO ângulo Sol-Vênus-Terra é: ",phib," rad (",math.degrees(phib),"°)"
+        "\nO ângulo Vênus-Sol-Terra é: ",thetab," rad (",math.degrees(thetab),"°)"
         "\nFase: ",pb,"%"
         "\nBrilho: ",bb,"*10^(-14)*K, onde K = constante"
         "\n"
