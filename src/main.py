@@ -42,16 +42,16 @@ def main():
                 break
 
     if informacao == 1: 
-    r = float(input("Entre com o valor da distância Terra-Vênus, em quilômetros: "))
-    r = (r/(10**7))
-    if r == 25.76:
-        erro = "conjsup"
-    elif r > 25.76:
-        erro = 2
-    elif r == 4.14:
-        erro = "conjinf"
-    elif r < 4.14:
-        erro = 2
+        r = float(input("Entre com o valor da distância Terra-Vênus, em quilômetros: "))
+        r = (r/(10**7))
+        if r == 25.76:
+            erro = "conjsup"
+        elif r > 25.76:
+            erro = 2
+        elif r == 4.14:
+            erro = "conjinf"
+        elif r < 4.14:
+            erro = 2
     else:
         psi = (math.acos((r**2+S**2-s**2)/(2*r*S)))
         phi = (math.acos((r**2+s**2-S**2)/(2*r*s)))
