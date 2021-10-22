@@ -32,7 +32,6 @@ fn main() {
     \n Just inform the correspondent number: ");
     let _error = stdout().flush();
     stdin().read_line(&mut information).expect("Did not enter a correct string");
-    println!("You typed: {}", information);
 
     if information == "1"{
         first_choice();
