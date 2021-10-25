@@ -1,24 +1,19 @@
-use std::io::{stdin,stdout,Write};
+use std::io::{stdin, stdout, Write};
 
-fn fifth_choice(){
+mod fifth_choice;
+use fifth_choice::fifth_choice;
 
-}
+mod fourth_choice;
+use fourth_choice::fourth_choice;
 
-fn fourth_choice(){
+mod third_choice;
+use third_choice::third_choice;
 
-}
+mod second_choice;
+use second_choice::second_choice;
 
-fn third_choice(){
-
-}
-
-fn second_choice(){
-
-}
-
-fn first_choice(){
-
-}
+mod first_choice;
+use first_choice::first_choice;
 
 fn main() {
     
@@ -31,7 +26,7 @@ fn main() {
     \n 5) Date - Between the last inferior conjunction (2020-06-03) and the next (2022-01-08)
     \n Just inform the correspondent number: ");
     let _error = stdout().flush();
-    stdin().read_line(&mut information).expect("Did not enter a correct string");
+    stdin().read_line(&mut information).expect("Did not enter a correct string!");
 
     if information == "1"{
         first_choice();
