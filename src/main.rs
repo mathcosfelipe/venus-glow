@@ -17,7 +17,7 @@ fn angle_sun_earth_venus(){
 }
 
 fn distance_earth_venus(){
-    // let distance_earth_venus: f64 = 
+    
 }
 
 fn main(){
