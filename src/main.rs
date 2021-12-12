@@ -19,10 +19,8 @@ fn angle_sun_earth_venus(){
 fn distance_earth_venus(){
     let mut distance_earth_venus: String = String::new();
     stdin().read_line(&mut &mut distance_earth_venus).expect("Did not enter a correct string!");
-    let mut value_distance_earth_venus: f64 = distance_earth_venus.trim().parse().expect("Invalid option. Try again.");
-    value_distance_earth_venus = while{
-        
-    };
+    let value_distance_earth_venus: f64 = distance_earth_venus.trim().parse().expect("Invalid option. Try again.");
+    print!("{}", value_distance_earth_venus);
 }
 
 fn main(){
