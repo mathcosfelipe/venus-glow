@@ -20,6 +20,7 @@ fn distance_earth_venus(){
 
     let mut str_error: &str;
     let mut integer_error: u8;
+    
     let mut psi: f64 = 0.0; 
     let mut phi: f64 = 0.0; 
     let mut theta: f64 = 0.0; 
