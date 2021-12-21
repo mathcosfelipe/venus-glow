@@ -39,14 +39,14 @@ pub fn acos(x: f64) -> f64{
         return 0. / (x - x);
     }
 
-    if ix < 0x3fe00000 {
-        if ix <= 0x3c600000 {
+    if ix < 0x3fe00000{
+        if ix <= 0x3c600000{
             return PIO2_HI + x1p_120f;
         }
         return PIO2_HI - (x - (PIO2_LO - x * r(x * x)));
     }
     
-    if (hx >> 31) != 0 {
+    if (hx >> 31) != 0{
         z = (1.0 + x) * 0.5;
         s = sqrt(z);
         w = r(z) * s - PIO2_LO;
@@ -61,4 +61,5 @@ pub fn acos(x: f64) -> f64{
     c = (z - df * df) / (s + df);
     w = r(z) * s + c;
     return 2. * (df + w);
+    
 }
