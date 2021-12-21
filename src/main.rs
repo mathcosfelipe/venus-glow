@@ -51,7 +51,7 @@ fn distance_earth_venus(){
     }else if value_distance_earth_venus < 4.15{
         integer_error = 2;    
     }else{
-
+        psi = acos();
     }
 
 }
