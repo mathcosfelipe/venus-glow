@@ -1,5 +1,11 @@
 use std::io::{stdin};
 
+mod math{
+    pub fn acos(){}
+}
+
+use math::acos;
+
 fn date_between_the_last_inferior_conjunction(){
 
 }
