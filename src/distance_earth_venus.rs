@@ -33,7 +33,7 @@ pub fn distance_earth_venus(){
     }else if value_distance_earth_venus < 4.15{
         integer_error = 2;    
     }else{
-        psi = acos();
+        psi = acos(f64::pow(value_distance_earth_venus, 2) + f64::pow(beta, 2) - 2.0 * value_distance_earth_venus * gama);
     }
 
 }
