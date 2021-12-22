@@ -6,7 +6,7 @@ def distance_earth_venus(psi, phi, theta, tau, upsilon, beta, gama):
         try:
             distance_earth_venus = float(input('Input the value of distance between Earth and Venus, in Kilometers: '))
         except:
-            print('Invalid value. Informa a float number.')
+            print('Invalid value. Inform a float number.')
         else:
             break
 
