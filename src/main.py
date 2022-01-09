@@ -46,15 +46,19 @@ def main():
             else:
                 break
 
+    processing = None
+
     if information == 1:
-        distance_earth_venus(psi, phi, theta, tau, upsilon, beta, gama, date_a, date_b, last_inferior_conjunction, next_inferior_conjunction, date_superior_conjunction, inferior_conjunction_a, inferior_conjunction_b, superior_conjunction_a, superior_conjunction_b, max_conjunction_a, max_conjunction_b) 
+        processing = distance_earth_venus(psi, phi, theta, tau, upsilon, beta, gama, date_a, date_b, last_inferior_conjunction, next_inferior_conjunction, date_superior_conjunction, inferior_conjunction_a, inferior_conjunction_b, superior_conjunction_a, superior_conjunction_b, max_conjunction_a, max_conjunction_b) 
     elif information == 2:
-        angle_sun_earth_venus()
+        processing = angle_sun_earth_venus()
     elif information == 3:
-        angle_sun_venus_earth()
+        processing = angle_sun_venus_earth()
     elif information == 4:
-        angle_venus_sun_earth()
+        processing = angle_venus_sun_earth()
     else:
-        date_between_the_last_inferior_conjunction()
+        processing = date_between_the_last_inferior_conjunction()
+
+    print(processing)
 
 main()
