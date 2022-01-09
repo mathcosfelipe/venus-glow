@@ -58,7 +58,7 @@ def distance_earth_venus(psi, phi, theta, tau, upsilon, beta, gama, date_a, date
         if error != None:
             result.append(error)
 
-        if(len(error == 0)):
+        if(len(result == 0)):
             return False
         else:
             return result
