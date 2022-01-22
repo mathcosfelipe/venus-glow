@@ -1,7 +1,7 @@
 import math
 from datetime import timedelta
 
-def angle_venus_sun_earth(psi, phi, theta, tau, upsilon, beta, gama, date_a, date_b, last_inferior_conjunction, next_inferior_conjunction, date_superior_conjunction, inferior_conjunction_a, inferior_conjunction_b, superior_conjunction_a, superior_conjunction_b, max_conjunction_a, max_conjunction_b):
+def angle_venus_sun_earth():
 
     error = None
     today = None
