@@ -3,8 +3,33 @@ from datetime import timedelta
 
 def angle_sun_venus_earth():
 
-    error = None
     today = None
+    error = 0
+
+    psi = 0.0 
+    phi = 0.0 
+    theta = 0.0 
+    tau = 0.0 
+    upsilon = 0.0
+
+    beta = 10.81
+    gama = 14.95
+
+    last_inferior_conjunction = datetime.date(2020, 6, 3) 
+    next_inferior_conjunction = datetime.date(2022, 1, 8)
+    date_superior_conjunction = datetime.date(2021, 3, 22)
+
+    t = 0
+
+    date_a = 0
+    date_b = 0
+
+    inferior_conjunction_a = 0
+    inferior_conjunction_b = 0
+    superior_conjunction_a = 0
+    superior_conjunction_b = 0
+    max_conjunction_a = 0
+    max_conjunction_b = 0
 
     while True:
         try:    
