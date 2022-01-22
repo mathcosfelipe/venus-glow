@@ -53,7 +53,7 @@ def main():
     elif information == 2:
         processing = angle_sun_earth_venus(psi, phi, theta, tau, upsilon, beta, gama, date_a, date_b, last_inferior_conjunction, next_inferior_conjunction, date_superior_conjunction, inferior_conjunction_a, inferior_conjunction_b, superior_conjunction_a, superior_conjunction_b, max_conjunction_a, max_conjunction_b)
     elif information == 3:
-        processing = angle_sun_venus_earth()
+        processing = angle_sun_venus_earth(psi, phi, theta, tau, upsilon, beta, gama, date_a, date_b, last_inferior_conjunction, next_inferior_conjunction, date_superior_conjunction, inferior_conjunction_a, inferior_conjunction_b, superior_conjunction_a, superior_conjunction_b, max_conjunction_a, max_conjunction_b)
     elif information == 4:
         processing = angle_venus_sun_earth()
     else:
