@@ -55,23 +55,30 @@ def date_between_the_last_inferior_conjunction(psi, phi, theta, tau, upsilon, be
         r = (math.sqrt(pow(beta, 2) + pow(gama, 2) - 2 * beta * gama * (math.cos(theta))))
         psi = (math.acos((pow(gama, 2) + pow(r, 2) - pow(beta, 2)) / (2 * gama * r)))
         phi = (math.acos((pow(r, 2) + pow(beta, 2) - pow(gama, 2)) / (2 * r * beta)))
-        p = (0.5 * (1+math.cos(phi)))*100 
-        b = ((2*s*r+r**2+s**2-S**2)/r**3)
-        data = date
-        cinf = (584-t)
+        tau = ((0.5 * (1 + math.cos(phi))) * 100) 
+        beta = ((2 * beta * r + pow(r, 2) + pow(beta, 2) - pow(gama, 2)) / pow(r, 3))
+        date = date
+        inferior_conjunction = 584 - t
         if t < 292: 
-            csup = (292-t)
+            superior_conjunction = 292 - t
         else:
-            csup = (876-t)
+            superior_conjunction = 876 - t
         if t == 36: 
-            cmax = 512
-            hoje = "Hoje é dia de brilho máximo! "
+            max_conjunction = 512
+            today = "Today is day of maximum brightness"
         elif t == 548: 
             cmax = 72
-            hoje = "Hoje é dia de brilho máximo! "
+            today = "Today is day of maximum brightness"
         elif t < 36: 
-            cmax = (36-t)
-            hoje = ""
+            max_conjunction = (36-t)
+            today = None
         else:
-            cmax = (584-36-36-t) 
-            hoje = ""
+            max_conjunction = 584 - 36 - 36 - t 
+            today = None
+
+        result = {
+            "error": error,
+            "today": today
+        }
+
+        return result
