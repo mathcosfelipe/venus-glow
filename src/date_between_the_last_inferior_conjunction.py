@@ -54,8 +54,8 @@ def date_between_the_last_inferior_conjunction(psi, phi, theta, tau, upsilon, be
                           
         r = (math.sqrt(pow(beta, 2) + pow(gama, 2) - 2 * beta * gama * (math.cos(theta))))
         psi = (math.acos((pow(gama, 2) + pow(r, 2) - pow(beta, 2)) / (2 * gama * r)))
-        phi = (math.acos((r**2+s**2-S**2)/(2*r*s)))
-        p = (0.5*(1+math.cos(phi)))*100 
+        phi = (math.acos((pow(r, 2) + pow(beta, 2) - pow(gama, 2)) / (2 * r * beta)))
+        p = (0.5 * (1+math.cos(phi)))*100 
         b = ((2*s*r+r**2+s**2-S**2)/r**3)
         data = date
         cinf = (584-t)
