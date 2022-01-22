@@ -26,11 +26,11 @@ def angle_venus_sun_earth(psi, phi, theta, tau, upsilon, beta, gama, date_a, dat
     else: 
         r = (math.sqrt(pow(beta, 2) + pow(gama, 2) - 2 * beta * gama * (math.cos(theta))))
         psi = (math.acos((pow(gama, 2) + pow(r, 2) - pow(beta, 2)) / (2 * gama * r)))
-        phi = (math.acos((r**2+s**2-S**2)/(2*r*s)))
-        p = (0.5*(1+math.cos(phi)))*100
-        b = ((2*s*r+r**2+s**2-S**2)/r**3)
-        t = (theta/0.010758878950649977)
-        t = round(t,0)
+        phi = (math.acos((pow(r, 2) + pow(beta, 2) - pow(gama, 2)) / (2 * r * beta)))
+        tau = ((0.5 * (1 + math.cos(phi))) * 100)
+        beta = ((2 * beta * r + pow(r, 2) + pow(beta, 2) - pow(gama, 2)) / pow(r, 3))
+        t = (theta / 0.010758878950649977)
+        t = round(t, 0)
         data1 = ultimacinf + timedelta(days = t)
         data2 = proximacinf - timedelta(days = t)
         cinf1 = (584-t)
