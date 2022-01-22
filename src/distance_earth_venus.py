@@ -50,15 +50,9 @@ def distance_earth_venus(psi, phi, theta, tau, upsilon, beta, gama, date_a, date
             max_conjunction_b = (72)
             today = 'Today is day of maximum brightness'
 
-        result = []
+        result = {
+            "error": error,
+            "today": today
+        }
 
-        if today != None:
-            result.append(today)
-        
-        if error != None:
-            result.append(error)
-
-        if(len(result == 0)):
-            return False
-        else:
-            return result
+        return result
