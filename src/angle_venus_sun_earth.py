@@ -1,4 +1,3 @@
-from copy import error
 import math
 from datetime import timedelta
 
@@ -31,21 +30,28 @@ def angle_venus_sun_earth(psi, phi, theta, tau, upsilon, beta, gama, date_a, dat
         beta = ((2 * beta * r + pow(r, 2) + pow(beta, 2) - pow(gama, 2)) / pow(r, 3))
         t = (theta / 0.010758878950649977)
         t = round(t, 0)
-        data1 = ultimacinf + timedelta(days = t)
-        data2 = proximacinf - timedelta(days = t)
-        cinf1 = (584-t)
-        cinf2 = (t)
-        csup1 = (292-t)
-        csup2 = (292+t)
+        date_a = +last_inferior_conjunction + timedelta(days = t)
+        date_b = next_inferior_conjunction - timedelta(days = t)
+        inferior_conjunction_a = 584 - t
+        inferior_conjunction_b = t
+        superior_conjunction_a = 292 - t
+        superior_conjunction_b = 292 + t
         if t < 36: 
-            cmax1 = (36-t)
-            cmax2 = (36+t)
-            hoje = ""
+            max_conjunction_a = 36 - t
+            max_conjunction_b = 36 + t
+            today = None
         elif t > 36: 
-            cmax1 = (584-36-36-t) 
-            cmax2 = (t-36)
-            hoje = ""
+            max_conjunction_a = 584 - 36 - 36 - t 
+            max_conjunction_b = t - 36
+            hoje = None
         else:
-            cmax1 = (584-36-36)
-            cmax2 = (36+36)
-            hoje = "Hoje é dia de brilho máximo! "
+            max_conjunction_a = 584 - 36 - 36
+            max_conjunction_b = 36 + 36
+            today = "Today is day of maximum brightness!"
+
+        result = {
+            "error": error,
+            "today": today
+        }
+
+        return result
